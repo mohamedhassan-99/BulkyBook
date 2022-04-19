@@ -71,7 +71,7 @@ namespace BulkyBookWeb.Controllers
                     var ImageUrl = Path.Combine(@"\images\products\", fileName + extension);
                     if (productVM.Product.ImageUrl != null)
                     {
-                        var oldImagePath = Path.Combine(upload, productVM.Product.ImageUrl.TrimStart('\\'));
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
                         if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
@@ -110,7 +110,7 @@ namespace BulkyBookWeb.Controllers
         [HttpGet]
         public IActionResult getAll()
         {
-            var productList = _unitOfWork.Product.GetAll("Category,CoverType");
+            var productList = _unitOfWork.Product.GetAll ("Category,CoverType");
             return Json(new { data = productList });
         }
 

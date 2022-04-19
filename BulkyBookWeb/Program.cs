@@ -14,6 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer
 ));
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAuthentication().AddCookie(option =>
+{
+    option.Cookie.Name = "Cookies";
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,7 +32,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+//app.UseAuthentication();
 app.UseAuthorization();
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");

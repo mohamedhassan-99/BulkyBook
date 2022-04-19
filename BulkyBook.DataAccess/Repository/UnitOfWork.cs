@@ -20,6 +20,7 @@ namespace BulkyBook.DataAccess.Repository
             CoverType = new CoverTypeRepository(_context);
             
             Product = new ProductRepository(_context);
+
         }
         public ICategoryRepository Category { get; private set; }
         public ICoverTypeRepository CoverType { get; private set; }
