@@ -10,7 +10,7 @@ function loadDataTable() {
         },
         "columns": [
             {"data":"name","width":"15%"},
-            {"data":"address","width":"15%"},
+            {"data":"streetAddress","width":"15%"},
             {"data":"city","width":"15%"},
             {"data":"state","width":"15%"},
             {"data":"phoneNumber","width":"15%"},
@@ -19,9 +19,9 @@ function loadDataTable() {
                 "render": function (data) {
                     return`
                     <div class="w-75 btn-group" role="group">
-                        <a href = "/Admin/Product/Upsert?id=${data}"
+                        <a href = "/Admin/Company/Upsert?id=${data}"
                         class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
-                        <a onClick=Delete('/Admin/Product/Delete/?id=${data}')
+                        <a onClick=Delete('/Admin/Company/Delete/?id=${data}')
                         class="btn btn-danger mx-2"><i class="bi bi-trash"></i> Delete</a>
                     </div>
                     `
