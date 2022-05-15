@@ -15,9 +15,9 @@ namespace BulkyBook.Model.Models
         public string Author { get; set; }
         [Required, Range(1, 1000), Display(Name = "List Price")]
         public double ListPrice { get; set; }
-        [Required, Range(1, 1000), Display(Name = "Price for 50-100")]
+        [Required, Range(1, 1000), Display(Name = "Price for 1-49")]
         public double Price { get; set; }
-        [Required, Range(1, 1000), Display(Name = "Price for 50-100")]
+        [Required, Range(1, 1000), Display(Name = "Price for 50-99")]
         public double Price50 { get; set; }
         [Required, Range(1, 1000), Display(Name = "Price for 100+")]
         public double Price100 { get; set; }
