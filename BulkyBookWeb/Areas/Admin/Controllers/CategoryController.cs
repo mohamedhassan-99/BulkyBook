@@ -16,7 +16,7 @@ namespace BulkyBookWeb.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Category> categoryList = _unitOfWork.Category.GetAll();
+            IEnumerable<Category> categoryList = _unitOfWork.Category.GetAll(null,null);
             return View(categoryList);
         }
         public IActionResult Create()
