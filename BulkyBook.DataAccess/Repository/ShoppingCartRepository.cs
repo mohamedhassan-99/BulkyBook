@@ -1,5 +1,5 @@
 ﻿using BulkyBook.DataAccess.IRepository;
-using BulkyBook.Model.ViewModels;
+using BulkyBook.Model.Models;
 
 namespace BulkyBook.DataAccess.Repository
 {
@@ -12,9 +12,17 @@ namespace BulkyBook.DataAccess.Repository
             _context = context;
         }
 
-        void IShoppingCartRepository.Update(ShoppingCart shoppingCart)
+        public int DecrementCount(ShoppingCart shoppingCart, int count)
         {
-            _context.ShoppingCarts.Update(shoppingCart);
+            shoppingCart.Count -= count;
+            return shoppingCart.Count;
         }
+
+        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count += count;
+            return shoppingCart.Count;
+        }
+
     }
 }

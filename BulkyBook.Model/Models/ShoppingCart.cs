@@ -1,14 +1,8 @@
-﻿using BulkyBook.Model.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BulkyBook.Model.ViewModels
+namespace BulkyBook.Model.Models
 {
     public class ShoppingCart
     {
@@ -21,5 +15,7 @@ namespace BulkyBook.Model.ViewModels
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId"),ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+        [NotMapped]
+        public double Price { get; set; }
     }
 }
