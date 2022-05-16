@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkyBook.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");;
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); ;
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -20,9 +20,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
-builder.Services.AddAuthentication().AddCookie(option =>
+builder.Services.ConfigureApplicationCookie(option =>
 {
-    option.Cookie.Name = "Cookies";
+    option.LoginPath = $"/Identity/Account/Login";
+    option.LogoutPath = $"/Identity/Account/Logout";
+    option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 var app = builder.Build();
 
@@ -38,7 +40,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication();
 //app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
