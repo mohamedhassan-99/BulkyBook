@@ -1,8 +1,10 @@
 ﻿using BulkyBook.DataAccess.IRepository;
 using BulkyBook.Model.Models;
 using BulkyBook.Model.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BulkyBookWeb.Controllers
 {
@@ -20,18 +22,42 @@ namespace BulkyBookWeb.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category,CoverType");
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(null,"Category,CoverType");
             return View(products);
         }
-        public IActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Details(int productId)
         {
             ShoppingCart shoppingCart = new ()
             {
                 Count = 1,
-                Product = _unitOfWork.Product.GetFirstOrDefualt(i => i.Id == id, "Category,CoverType")
+                ProductId = productId,
+                Product = _unitOfWork.Product.GetFirstOrDefualt(i => i.Id == productId, "Category,CoverType")
             };
 
             return View(shoppingCart);
+        }
+        [HttpPost,ValidateAntiForgeryToken,Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            shoppingCart.ApplicationUserId = claim.Value;
+
+            var shoppingCartfromDb = _unitOfWork.ShoppingCart.GetFirstOrDefualt(o =>
+            o.ApplicationUserId == shoppingCart.ApplicationUserId && o.ProductId == shoppingCart.ProductId);
+
+            if(shoppingCartfromDb == null)
+            {
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+            else
+            {
+                _unitOfWork.ShoppingCart.IncrementCount(shoppingCartfromDb, shoppingCart.Count);
+            }
+            
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
