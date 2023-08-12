@@ -1,6 +1,5 @@
 ﻿using BulkyBook.DataAccess.IRepository;
 using BulkyBook.Model.Models;
-using BulkyBook.Model.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
